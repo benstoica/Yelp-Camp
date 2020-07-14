@@ -1,27 +1,34 @@
- const express = require('express');
- const app = express();
- const bodyParser = require('body-parser');
+const express    = require('express');
+const app        = express();
+const bodyParser = require('body-parser');
+const mongoose   = require('mongoose');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
 
-const campgrounds = 
-[
-    {name: "Salmon Creek", image:"https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image:"https://pixabay.com/get/57e8d0424a5bae14f1dc84609620367d1c3ed9e04e507440712a78d09e48c0_340.jpg"},
-    {name: "Mountain Goat's Rest", image: "https://images.pexels.com/photos/6757/feet-morning-adventure-camping.jpg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Salmon Creek", image:"https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image:"https://pixabay.com/get/57e8d0424a5bae14f1dc84609620367d1c3ed9e04e507440712a78d09e48c0_340.jpg"},
-    {name: "Salmon Creek", image:"https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image:"https://pixabay.com/get/57e8d0424a5bae14f1dc84609620367d1c3ed9e04e507440712a78d09e48c0_340.jpg"}
-];
+
+//SCHEMA SETUP
+
+const campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+const Campground = mongoose.model('Campground', campgroundSchema);
 
 app.get('/', function(req, res){
     res.render("landing");
 });
 
 app.get('/campgrounds', function(req, res){
-    res.render('campgrounds', {campgrounds: campgrounds});
+    Campground.find({}, function(err, allCampgrounds){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render('campgrounds', {campgrounds: allCampgrounds});
+        }
+    });
 });
 
 app.get('/campgrounds/new', function(req, res) {
@@ -32,9 +39,14 @@ app.post('/campgrounds', function(req, res){
     const name = req.body.name;
     const image = req.body.image;
     const newCampground = {name: name, image: image};
-    campgrounds.push(newCampground);
-
+    
+    Campground.create(newCampground, function(err, newlyCreated){
+        if(err) {
+            console.log(err);
+        } else {
     res.redirect('/campgrounds');
+        }
+    });
 });
 
 
