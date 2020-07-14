@@ -31,10 +31,6 @@ app.get('/campgrounds', function(req, res){
     });
 });
 
-app.get('/campgrounds/new', function(req, res) {
-    res.render('new.ejs');
-});
-
 app.post('/campgrounds', function(req, res){
     const name = req.body.name;
     const image = req.body.image;
@@ -48,6 +44,12 @@ app.post('/campgrounds', function(req, res){
         }
     });
 });
+
+app.get('/campgrounds/new', function(req, res) {
+    res.render('new.ejs');
+});
+
+
 
 
 
