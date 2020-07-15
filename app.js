@@ -12,7 +12,8 @@ mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, us
 
 const campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 const Campground = mongoose.model('Campground', campgroundSchema);
@@ -26,7 +27,7 @@ app.get('/campgrounds', function(req, res){
         if(err) {
             console.log(err);
         } else {
-            res.render('campgrounds', {campgrounds: allCampgrounds});
+            res.render('index', {campgrounds: allCampgrounds});
         }
     });
 });
@@ -34,7 +35,8 @@ app.get('/campgrounds', function(req, res){
 app.post('/campgrounds', function(req, res){
     const name = req.body.name;
     const image = req.body.image;
-    const newCampground = {name: name, image: image};
+    const description = req.body.description;
+    const newCampground = {name: name, image: image, description:description};
     
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) {
@@ -45,12 +47,22 @@ app.post('/campgrounds', function(req, res){
     });
 });
 
+//NEW-form to create new campground
 app.get('/campgrounds/new', function(req, res) {
     res.render('new.ejs');
 });
 
-
-
+//SHOW - shows more info about campground
+app.get('/campgrounds/:id',function(req, res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render('show', {campground: foundCampground});
+        }
+    });
+    req.params.id
+});
 
 
  app.listen(3000, process.env.IP, function(){
