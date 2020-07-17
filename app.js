@@ -8,8 +8,10 @@ const seedDB     = require('./seeds.js');
 
 seedDB();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
+
 
 
 app.get('/', function(req, res){

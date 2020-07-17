@@ -1,9 +1,8 @@
 <%- include("../partials/header") %>
-
 <div class="container">
     <header class="jumbotron">
         <div class="containter">
-            <h1   h1>Welcome to YelpCamp</h1> 
+            <h1>Welcome to YelpCamp</h1> 
             <p>View campgrounds from all over the world</p>
             <p>
                 <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Campground</a>
@@ -19,8 +18,8 @@
 
     <div class="row text-center" style="display: flex; flex-wrap: wrap;">
         <% campgrounds.forEach(function(campground){ %>
-            <div class="col-md-auto col-sm-auto">
-                <div class="img-thumbnail">
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail card">
                     <img src="<%= campground.image %>" alt="campground">
                     <div class="caption">
                         <h4><%= campground.name %></h4>
@@ -33,6 +32,5 @@
         <% }); %>
     </div>
 </div>
-
 <%- include("../partials/footer") %>
 
