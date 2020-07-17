@@ -2,21 +2,14 @@ const express    = require('express');
 const app        = express();
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
+const Campground = require('./models/campground');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
 
 
-//SCHEMA SETUP
 
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-const Campground = mongoose.model('Campground', campgroundSchema);
 
 app.get('/', function(req, res){
     res.render("landing");
