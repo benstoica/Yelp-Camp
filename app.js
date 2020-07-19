@@ -1,10 +1,13 @@
-const express    = require('express');
-const app        = express();
-const bodyParser = require('body-parser');
-const mongoose   = require('mongoose');
-const Campground = require('./models/campground');
-const Comment    = require('./models/comment');
-const seedDB     = require('./seeds.js');
+const express       = require('express');
+const app           = express();
+const bodyParser    = require('body-parser');
+const mongoose      = require('mongoose');
+const Campground    = require('./models/campground');
+const Comment       = require('./models/comment');
+const seedDB        = require('./seeds.js');
+const passport      = require('passport');
+const LocalStrategy = require('passport-local');
+const user          = require('./models/user');
 
 seedDB();
 app.use(bodyParser.urlencoded({ extended: true }));
