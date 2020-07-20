@@ -2,7 +2,7 @@ const express    = require('express');
 const router     = express.Router();
 const Campground = require('../models/campground');
 
-router.get('/', function(req, res){
+router.get('/', isLoggedIn, function(req, res){
     Campground.find({}, function(err, allCampgrounds){
         if(err) {
             console.log(err);
@@ -16,19 +16,23 @@ router.post('/', function(req, res){
     const name = req.body.name;
     const image = req.body.image;
     const description = req.body.description;
-    const newCampground = {name: name, image: image, description:description};
+    const author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    const newCampground = {name: name, image: image, description:description, author: author};
     
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) {
             console.log(err);
         } else {
-    res.redirect('/campgrounds');
+            res.redirect('/campgrounds');
         }
     });
 });
 
 //NEW-form to create new campground
-router.get('/new', function(req, res) {
+router.get('/new', isLoggedIn, function(req, res) {
     res.render('campgrounds/new');
 });
 
@@ -42,5 +46,13 @@ router.get('/:id',function(req, res){
         }
     });
 });
+
+//middleware
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}; 
  
 module.exports = router;
