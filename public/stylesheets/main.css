@@ -5,3 +5,7 @@
 #moreInfoPic {
     padding: 0;
 }
+
+#deleteForm {
+    display: inline;
+}
