@@ -1,13 +1,14 @@
-const express       = require('express');
-const app           = express();
-const bodyParser    = require('body-parser');
-const mongoose      = require('mongoose');
-const Campground    = require('./models/campground');
-const Comment       = require('./models/comment');
-const seedDB        = require('./seeds.js');
-const passport      = require('passport');
-const LocalStrategy = require('passport-local');
-const User          = require('./models/user');
+const express        = require('express');
+const app            = express();
+const bodyParser     = require('body-parser');
+const mongoose       = require('mongoose');
+const Campground     = require('./models/campground');
+const Comment        = require('./models/comment');
+const seedDB         = require('./seeds.js');
+const passport       = require('passport');
+const LocalStrategy  = require('passport-local');
+const User           = require('./models/user');
+const methodOverride = require('method-override')
 
 //requiring routes
 const commentRoutes    = require('./routes/comments');
@@ -18,6 +19,8 @@ const indexRoutes      = require('./routes/index');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
 
 //PASSPORT CONFIG
