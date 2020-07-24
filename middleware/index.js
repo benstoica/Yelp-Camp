@@ -26,7 +26,8 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next) {
 middlewareObj.checkCommentOwnership = function(req, res, next) {
     if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, function(err, foundComment){
-            if(err) {
+            if(err || !foundComment) {
+                req.flash('error', 'Comment not found');
                 res.redirect('back');
             } else {
                 if(foundComment.author.id.equals(req.user._id)) {
