@@ -13,7 +13,8 @@ router.get('/', function(req, res){
     });
 });
 
-router.post('/', function(req, res){
+//CREATE-add new campbground
+router.post('/', middleware.isLoggedIn, function(req, res){
     const name = req.body.name;
     const image = req.body.image;
     const description = req.body.description;
@@ -38,7 +39,7 @@ router.get('/new', middleware.isLoggedIn, function(req, res) {
 });
 
 //SHOW - shows more info about campground
-router.get('/:id',function(req, res){
+router.get('/:id', function(req, res){
     Campground.findById(req.params.id).populate('comments').exec(function(err, foundCampground){
         if(err) {
             console.log(err);
