@@ -16,13 +16,14 @@ router.get('/', function(req, res){
 //CREATE-add new campbground
 router.post('/', middleware.isLoggedIn, function(req, res){
     const name = req.body.name;
+    const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
     const author = {
         id: req.user._id,
         username: req.user.username
     };
-    const newCampground = {name: name, image: image, description:description, author: author};
+    const newCampground = {name: name, price: price, image: image, description:description, author: author};
     
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) {
