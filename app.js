@@ -11,6 +11,8 @@ const User           = require('./models/user');
 const methodOverride = require('method-override');
 const flash          = require('connect-flash');
 
+app.locals.moment    = require('moment');
+
 //requiring routes
 const commentRoutes    = require('./routes/comments');
 const campgroundRoutes = require('./routes/campgrounds');
