@@ -9,3 +9,8 @@
 #moreInfoPic {
     padding: 0;
 }
+
+#map {
+    height: 400px;
+    width: 100%;
+}
