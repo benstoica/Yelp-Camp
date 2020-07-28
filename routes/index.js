@@ -24,7 +24,9 @@ router.post('/register', function(req, res){
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.email
+            email: req.body.email,
+            avatar: req.body.avatar,
+            about: req.body.about
         });
     User.register(newUser, req.body.password, function(err, user){
         if(err) {
@@ -56,6 +58,7 @@ router.get('/logout', function(req, res){
     res.redirect('/campgrounds');
 });
  
+//USER PROFILE ROUTE
 router.get("/users/:id", function(req, res) {
     User.findById(req.params.id, function(err, foundUser) {
       if(err) {
