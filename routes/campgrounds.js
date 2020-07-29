@@ -76,13 +76,42 @@ router.get('/new', middleware.isLoggedIn, function(req, res) {
 
 //SHOW - shows more info about campground
 router.get('/:id', function(req, res){
-    Campground.findById(req.params.id).populate('comments').exec(function(err, foundCampground){
+    Campground.findById(req.params.id).populate('comments likes').exec(function(err, foundCampground){
         if(err || !foundCampground) {
             req.flash('error', 'Campground not found');
             res.redirect('back');
         } else {
             res.render('campgrounds/show', {campground: foundCampground});
         }
+    });
+});
+
+//LIKES
+router.post('/:id/like', middleware.isLoggedIn, function(req, res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+            return res.redirect('/campgrounds');
+        }
+        const foundUserLike = foundCampground.likes.some(function(like){
+            return like.equals(req.user._id);
+        });
+
+        if(foundUserLike){
+            //removes like if user already liked campground
+            foundCampground.likes.pull(req.user._id);
+        } else {
+            //adds like
+            foundCampground.likes.push(req.user);
+        }
+
+        foundCampground.save(function(err){
+            if(err) {
+                console.log(err);
+                return res.redirect('/campgrounds');
+            }
+            return res.redirect('/campgrounds/' + foundCampground._id);
+        });
     });
 });
 
