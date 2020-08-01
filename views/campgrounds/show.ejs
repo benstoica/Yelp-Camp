@@ -1,12 +1,10 @@
 <%- include("../partials/header") %>
-
+<div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">YelpCamp</p>
             <div class="list-group">
-                <li class="list-group-item active">Info</li>
-                <li class="list-group-item">Info</li>
-                <li class="list-group-item">Info</li>
+                <li class="list-group-item">More Information</li>
+                <li class="list-group-item">Location: <%= campground.location %></li>
             </div>
             <div id="map"></div>
         </div>
@@ -15,7 +13,7 @@
                 <img class="img-responsive" src="<%= campground.image %>">
                 <div class="caption">
                     <h4 class="pull-right">$<%= campground.price %>/night</h4>
-                    <h4><a href="#"><%= campground.name %></a></h4>
+                    <h4> <%= campground.name %> </h4>
                     <div style="padding-bottom: 10px;">
                         <form action="/campgrounds/<%= campground._id %>/like" method="POST">
                             <div class="btn-group">
@@ -30,13 +28,12 @@
                                         <i class="fas fa-thumbs-up"></i> Like (<%= campground.likes.length %>)
                                     </button>
                                 <% } %>
-                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal"
-                                        data-target="#campgroundLikes">See more details
-                                </button>
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#campgroundLikes">See more details</button>
                             </div>
                         </form>
                     </div>
                     <p><%= campground.description %></p>
+                    <hr>
                     <p>
                         <em>Campsite Added By:</em> <a href="/users/<%= campground.author.id %>"> <%= campground.author.username %> </a>, <%= moment(campground.createdAt).fromNow() %>
                     </p>
@@ -51,7 +48,7 @@
             <div class="well">
                 <h4 class="pull-left">Comments & Reviews</h4>
                 <div class="text-right">
-                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new"><i class="fa fa-plus"></i> Add New Comment</a>
                 </div>      
                 <hr>                      
                 <% campground.comments.forEach(function(comment){ %>
@@ -111,7 +108,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <script>
         function initMap() {
