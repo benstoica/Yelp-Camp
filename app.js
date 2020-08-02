@@ -27,7 +27,9 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(flash());
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
+// mongoose.connect('mongodb://localhost/yelp-camp', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb+srv://1:1@yelpcamp.mthii.mongodb.net/YelpCamp?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true });
+
 
 //PASSPORT CONFIG
 app.use(require('express-session')({
