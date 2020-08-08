@@ -20,4 +20,4 @@ This project was created using Node.js, Express, MongoDB, and Bootstrap. Passpor
   
 - Flash messages responding to users’ interaction with the app
 - Responsive web design
-- Used momentJS to show post and comment creation and update timestamp
+- Used momentJS to show post and campground and comment creation and update timestamp
